@@ -25,7 +25,8 @@ class User extends Model {
     }
 
     public function getById($id) {
-        return $this->query("SELECT * FROM users WHERE id = ?", [$id])->fetch(PDO::FETCH_ASSOC);
+        $user = $this->query("SELECT * FROM users WHERE id = ?", [$id])->fetchObject(static::class);
+        return $user ? $user->toSafeArray() : null;
     }
 
     public function create($name, $email, $password): bool|\PDOStatement
